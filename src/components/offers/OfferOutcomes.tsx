@@ -1,0 +1,11 @@
+"use client";
+import { money } from "@/lib/campaign/catalog";
+import type { SponsorshipOffer } from "@/lib/offers/types";
+export function OfferOutcomes({ offers, onEdit }: { offers: SponsorshipOffer[]; onEdit?: () => void }) {
+  const recorded = offers.filter(o => !!o.outcomes);
+  return <section className="card mb-8 p-6" aria-label="Reported offer outcomes">
+    <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="text-lg font-semibold">Reported offer outcomes</h2>{onEdit && <button type="button" className="btn btn-secondary" onClick={onEdit}>Record actual results</button>}</div>
+    <p className="mt-3 text-sm leading-relaxed text-ink-soft">These are observed figures entered from your reports. They stay separate from Reppl tracked clicks and do not influence pre-campaign recommendations.</p>
+    {recorded.length === 0 ? <p className="mt-4 text-sm text-ink-faint">No results recorded yet. Add actual spend and sourced results to an offer after activation.</p> : <div className="mt-4 overflow-x-auto"><table className="w-full text-sm"><caption className="sr-only">Actual results and their sources</caption><thead><tr className="border-b border-line"><th className="py-2 pr-4 text-left font-medium">Offer / source</th><th className="px-2 text-right font-medium">Spend (USD)</th><th className="px-2 text-right font-medium">Impressions</th><th className="px-2 text-right font-medium">Reported clicks</th><th className="pl-2 text-right font-medium">Conversions</th></tr></thead><tbody>{recorded.map(o => <tr key={o.id} className="border-b border-line/70"><th className="min-w-48 py-3 pr-4 text-left font-normal"><span className="block font-medium">{o.partner} · {o.title}</span><span className="block break-words text-ink-faint">{o.outcomes!.source} · {o.outcomes!.checkedAt}</span><span className="block text-ink-faint">{o.outcomes!.notes}</span></th><td className="num px-2 text-right">{o.outcomes!.actualSpend === null ? "—" : money(o.outcomes!.actualSpend)}</td>{[o.outcomes!.impressions, o.outcomes!.clicks, o.outcomes!.conversions].map((v,i) => <td key={i} className="num px-2 text-right">{v === null ? "—" : v.toLocaleString()}</td>)}</tr>)}</tbody></table></div>}
+  </section>;
+}

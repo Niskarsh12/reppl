@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Independent video tooling and generated media are outside the application.
+    "demo-video/**",
   ]),
 ]);
 

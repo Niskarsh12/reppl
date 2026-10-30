@@ -1,26 +1,360 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ivory: #f5f1e8;
+  --color-paper: #fbf9f4;
+  --color-ink: #191a16;
+  --color-ink-soft: #4f4f47;
+  --color-ink-faint: #6b685e;
+  --color-line: #e2dccd;
+  --color-line-strong: #cfc7b4;
+  --color-forest: #1f3d2b;
+  --color-forest-soft: #2c5a3f;
+  --color-forest-deep: #10211a;
+  --color-moss: #dde6d3;
+  --color-lavender: #cfc5f2;
+  --color-lavender-soft: #ebe6fa;
+  --color-lavender-deep: #54468f;
+  --color-rust: #9c3f1a;
+  --color-rust-soft: #f6e4da;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  ::selection {
+    background: var(--color-lavender);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-lavender-deep);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* The landing statement: Instrument Serif at poster scale, two lines at most. */
+  .type-display {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(3.1rem, 10.4vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: -0.025em;
+  }
+
+  .type-section {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 4.6vw, 4.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+
+  .type-title {
+    font-weight: 600;
+    font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 2.75rem;
+    padding: 0 1.25rem;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition:
+      transform 160ms var(--ease-out),
+      background-color 180ms ease,
+      color 180ms ease,
+      box-shadow 180ms ease,
+      opacity 180ms ease;
+  }
+
+  .btn:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(0.97);
+  }
+
+  .btn-lg {
+    height: 3.5rem;
+    padding: 0 1.75rem;
+    font-size: 1.0625rem;
+  }
+
+  .btn-primary {
+    background: var(--color-forest);
+    color: var(--color-ivory);
+  }
+
+  .btn-primary:disabled,
+  .btn-primary[aria-disabled="true"] {
+    background: var(--color-line);
+    color: var(--color-ink-faint);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-ink);
+    box-shadow: inset 0 0 0 1px var(--color-line-strong);
+  }
+
+  .btn-quiet {
+    height: 2.25rem;
+    padding: 0 0.75rem;
+    color: var(--color-ink-soft);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+      background: var(--color-forest-soft);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      box-shadow: inset 0 0 0 1px var(--color-ink);
+    }
+    .btn-quiet:hover:not(:disabled) {
+      color: var(--color-ink);
+      background: rgb(25 26 22 / 0.05);
+    }
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    box-shadow: inset 0 0 0 1px var(--color-line-strong);
+    color: var(--color-ink-soft);
+    background: var(--color-paper);
+    transition:
+      transform 160ms var(--ease-out),
+      background-color 180ms ease,
+      color 180ms ease,
+      box-shadow 180ms ease,
+      opacity 180ms ease;
+  }
+
+  .chip:active:not([aria-disabled="true"]) {
+    transform: scale(0.97);
+  }
+
+  .chip[aria-checked="true"],
+  .chip[aria-pressed="true"] {
+    background: var(--color-forest);
+    color: var(--color-ivory);
+    box-shadow: inset 0 0 0 1px var(--color-forest);
+  }
+
+  .chip[aria-disabled="true"] {
+    opacity: 0.55;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .chip:not([aria-checked="true"]):not([aria-pressed="true"]):not([aria-disabled="true"]):hover {
+      color: var(--color-ink);
+      box-shadow: inset 0 0 0 1px var(--color-ink);
+    }
+  }
+
+  .input {
+    width: 100%;
+    height: 3rem;
+    padding: 0 1rem;
+    border-radius: 0.875rem;
+    background: var(--color-paper);
+    box-shadow: inset 0 0 0 1px var(--color-line-strong);
+    font-size: 1rem;
+    color: var(--color-ink);
+    transition: box-shadow 180ms ease;
+  }
+
+  textarea.input {
+    height: auto;
+    padding: 0.75rem 1rem;
+    line-height: 1.55;
+    resize: vertical;
+  }
+
+  .input::placeholder {
+    color: var(--color-ink-faint);
+  }
+
+  .input:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 1.5px var(--color-forest);
+  }
+
+  .input[aria-invalid="true"] {
+    box-shadow: inset 0 0 0 1.5px var(--color-rust);
+  }
+
+  .input:disabled {
+    color: var(--color-ink-faint);
+    background: transparent;
+  }
+
+  .card {
+    border-radius: 1.25rem;
+    background: var(--color-paper);
+  }
+
+  .pill {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 0.375rem;
+    height: 1.5rem;
+    padding: 0 0.625rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .pill-lavender {
+    background: var(--color-lavender-soft);
+    color: var(--color-lavender-deep);
+  }
+
+  .pill-moss {
+    background: var(--color-moss);
+    color: var(--color-forest);
+  }
+
+  .pill-rust {
+    background: var(--color-rust-soft);
+    color: var(--color-rust);
+  }
+
+  .pill-neutral {
+    background: rgb(25 26 22 / 0.06);
+    color: var(--color-ink-soft);
+  }
+
+  .skeleton {
+    border-radius: 0.375rem;
+    background: rgb(25 26 22 / 0.07);
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes breathe {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Landing entrance: CSS keeps it smooth while the page hydrates. */
+.anim-fade-up {
+  animation: fade-up 600ms var(--ease-out) both;
+}
+
+/* Landing only. The taste line arrives as it enters. Nothing above it is hidden. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .land-turn {
+      animation: fade-up 600ms var(--ease-out) both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 30%;
+    }
+  }
+}
+
+.land-arrow {
+  transition: transform 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .land-start:hover .land-arrow,
+  .land-start:focus-visible .land-arrow {
+    transform: translate(4px, -4px);
+  }
+}
+
+.anim-breathe {
+  animation: breathe 1.4s ease-in-out infinite;
+}
+
+/* Reduced motion keeps the fades that orient people and drops movement and loops. */
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up {
+    animation: fade 400ms var(--ease-out) both;
+  }
+
+  .anim-breathe {
+    animation: none;
+  }
+
+  .land-arrow {
+    transition: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }

@@ -1,0 +1,23 @@
+/** Search terms used to find the Qloo tag behind each audience interest. */
+export const SCENE_QUERIES: Record<string, string[]> = {
+  "Specialty coffee": ["coffee", "cafe"],
+  "Natural wine": ["natural wine", "wine"],
+  "Home cooking": ["cooking", "recipes"],
+  "Run clubs": ["running", "marathon"],
+  "Yoga & breathwork": ["yoga", "meditation"],
+  "Skincare rituals": ["skincare", "beauty"],
+  "Vintage & thrift": ["vintage", "thrift"],
+  Streetwear: ["streetwear", "sneakers"],
+  "Slow fashion": ["sustainable fashion", "fashion"],
+  "Ceramics & craft": ["ceramics", "crafts"],
+  "Interior design": ["interior design", "home decor"],
+  "Vinyl & DJ culture": ["vinyl", "dj"],
+  "Indie gaming": ["indie games", "video games"],
+  "Film photography": ["photography", "film camera"],
+  Cycling: ["cycling", "bicycle"],
+  "Outdoors & camping": ["camping", "hiking"],
+  "Plant care": ["gardening", "houseplants"],
+  "Zines & print": ["zines", "books"],
+  Parenting: ["parenting", "family"],
+  "Personal finance": ["personal finance", "investing"],
+};
